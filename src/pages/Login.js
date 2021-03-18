@@ -1,7 +1,8 @@
 import React from 'react'
-import { StyleSheet, Text, View } from 'react-native'
+import { StyleSheet, View } from 'react-native'
 import { ILLogo } from '../assets'
 import { Button, Gap, Input, Link } from '../components'
+import { colors } from '../utils/colors'
 
 const Login = () => {
     return (
@@ -9,7 +10,6 @@ const Login = () => {
             <Gap height={40} />
             <ILLogo style={styles.logo} />
             <Gap height={70} />
-            {/* <Text style={styles.title}>Masuk dan mulai berkomunikasi</Text> */}
             <Input label="Email Address" />
             <Gap height={20} />
             <Input label="Password" />
@@ -27,18 +27,11 @@ export default Login
 
 const styles = StyleSheet.create({
     page: {
-        backgroundColor: 'white',
+        backgroundColor: colors.white,
         padding: 40,
         flex: 1
     },
     logo: {
         alignSelf: 'center'
-    },
-    title: {
-        fontSize: 20,
-        fontFamily: 'Nunito-SemiBold',
-        color: '#112340',
-        marginVertical: 40,
-        maxWidth: 153,
     }
 })
