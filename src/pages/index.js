@@ -3,5 +3,6 @@ import GetStarted from './GetStarted';
 import Register from './Register';
 import Login from './Login';
 import UploadPhoto from './UploadPhoto';
+import Profile from './Profile';
 
-export {Splash, GetStarted, Register, Login, UploadPhoto};
+export {Splash, GetStarted, Register, Login, UploadPhoto, Profile};
