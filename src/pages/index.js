@@ -6,6 +6,7 @@ import UploadPhoto from './UploadPhoto';
 import Home from './Home';
 import Messages from './Messages';
 import News from './News';
+import Profile from './Profile';
 
 export {Splash, 
     GetStarted, 
@@ -14,5 +15,6 @@ export {Splash,
     UploadPhoto,
     Home, 
     Messages, 
-    News
+    News,
+    Profile
 };
