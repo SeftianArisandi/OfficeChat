@@ -1,7 +1,6 @@
 import React, {useState} from 'react';
 import {StyleSheet, View, ScrollView, TextInput} from 'react-native';
 import {Button, Header} from '../components';
-import RNPickerSelect from 'react-native-picker-select';
 
 const ProfileEdit = ({navigation}) => {
   return (

@@ -1,6 +1,6 @@
 import React from 'react';
 import { TouchableOpacity } from 'react-native';
-import { IconBackDark } from '../../assets';
+import { IconBackDark, IconBackLight } from '../../assets';
 
 const ButtonIconOnly = ({onPress, icon}) => {
     const Icon = () => {
@@ -8,7 +8,7 @@ const ButtonIconOnly = ({onPress, icon}) => {
             return <IconBackDark />
         }
         if (icon === 'back-light'){
-            return <IconBackDark />
+            return <IconBackLight />
         }
         return <IconBackDark />
     }

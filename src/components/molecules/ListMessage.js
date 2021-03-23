@@ -1,16 +1,17 @@
 import React from 'react'
 import { StyleSheet, Text, View, Image } from 'react-native'
-import { DummyUser } from '../../assets'
+import { IconNext } from '../../assets'
 import { colors, fonts } from '../../utils'
 
-const ListMessage = ({profile, name, desc}) => {
+const ListMessage = ({profile, name, desc, type}) => {
     return (
         <View style={styles.container}>
             <Image source={profile} style={styles.avatar} />
-            <View>
+            <View style={styles.content}>
                 <Text style={styles.name}>{name}</Text>
                 <Text style={styles.desc}>{desc}</Text>
             </View>
+            {type === 'next' && <IconNext />}
         </View>
     )
 }
@@ -23,13 +24,17 @@ const styles = StyleSheet.create({
         padding: 16,
         borderBottomWidth: 1,
         borderBottomColor: colors.border,
-        alignItems: 'center'
+        alignItems: 'center',
+        justifyContent: 'space-between'
     },
     avatar: {
         width: 46,
         height: 46,
         borderRadius: 46 / 2,
         marginRight: 12
+    },
+    content: {
+        flex: 1,
     },
     name: {
         fontSize: 16,
