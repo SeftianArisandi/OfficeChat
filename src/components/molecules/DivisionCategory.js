@@ -1,15 +1,30 @@
 import React from 'react'
-import { StyleSheet, Text, View } from 'react-native'
-import { ILCatProduksi } from '../../assets'
+import { StyleSheet, Text, TouchableOpacity } from 'react-native'
+import { ILCatPemasaran, ILCatPembelanjaan, ILCatPersonalia, ILCatProduksi } from '../../assets'
 import { colors, fonts } from '../../utils'
 
-const DivisionCategory = () => {
+const DivisionCategory = ({divisi, onPress}) => {
+    const Icon = () => {
+        if (divisi === "Produksi"){
+            return <ILCatProduksi style={styles.illustration} />
+        }
+        if (divisi === "Pemasaran"){
+            return <ILCatPemasaran style={styles.illustration} />
+        }
+        if (divisi === 'Personalia'){
+            return <ILCatPersonalia style={styles.illustration} />
+        }
+        if (divisi === 'Pembelanjaan'){
+            return <ILCatPembelanjaan style={styles.illustration} />
+        }
+        return <ILCatProduksi style={styles.illustration} />
+    }
     return (
-        <View style={styles.container}>
-            <ILCatProduksi style={styles.illustration} />
+        <TouchableOpacity style={styles.container} onPress={onPress}>
+            <Icon />
             <Text style={styles.label}>Divisi</Text>
-            <Text style={styles.category}>Produksi</Text>
-        </View>
+            <Text style={styles.category}>{divisi}</Text>
+        </TouchableOpacity>
     )
 }
 
@@ -17,12 +32,12 @@ export default DivisionCategory
 
 const styles = StyleSheet.create({
     container: {
-        padding: 12,
+        padding: 10,
         backgroundColor: colors.cardLight,
         alignSelf: 'flex-start',
         borderRadius: 10,
         marginRight: 10,
-        width: 100,
+        width: 105,
         height: 130
     },
     illustration: {

@@ -1,7 +1,7 @@
 import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { GetStarted, Login, Register, Splash, UploadPhoto, Home, Messages, News, Profile } from '../pages';
+import { GetStarted, Login, Register, Splash, UploadPhoto, Home, Messages, News, Profile, ChooseUser } from '../pages';
 import { BottomNavigator } from '../components';
 
 
@@ -28,6 +28,7 @@ const Router = () => {
             <Stack.Screen name="UploadPhoto" component={UploadPhoto} options={{headerShown: false}} />
             <Stack.Screen name="Profile" component={Profile} options={{headerShown: false}} />
             <Stack.Screen name="MainApp" component={MainApp} options={{headerShown: false}} />
+            <Stack.Screen name="ChooseUser" component={ChooseUser} options={{headerShown: false}} />
         </Stack.Navigator>
     )
 }

@@ -5,6 +5,7 @@ import ILCatPemasaran from './cat-pemasaran.svg';
 import ILCatPembelanjaan from './cat-pembelanjaan.svg';
 import ILCatPersonalia from './cat-personalia.svg';
 import ILCatProduksi from './cat-produksi.svg';
+import ILNewsBg from './news-bg.png';
 
 export {
     ILLogo, 
@@ -13,5 +14,6 @@ export {
     ILCatPemasaran,
     ILCatPembelanjaan,
     ILCatPersonalia,
-    ILCatProduksi
+    ILCatProduksi,
+    ILNewsBg
 };

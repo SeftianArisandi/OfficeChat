@@ -1,0 +1,20 @@
+{
+    "data": [
+        {
+            "id": 1,
+            "divisi": "Produksi"
+        },
+        {
+            "id": 2,
+            "divisi": "Pemasaran"
+        },
+        {
+            "id": 3,
+            "divisi": "Personalia"
+        },
+        {
+            "id": 4,
+            "divisi": "Pembelanjaan"
+        }
+    ]
+}

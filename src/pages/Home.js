@@ -1,9 +1,10 @@
 import React from 'react'
 import { ScrollView, StyleSheet, Text, View } from 'react-native'
+import { DummyNews, JSONDivisionCategory } from '../assets'
 import { DivisionCategory, Gap, HomeProfile, NewsItem } from '../components'
 import { colors, fonts } from '../utils'
 
-const Home = () => {
+const Home = ({navigation}) => {
     return (
         <ScrollView showsVerticalScrollIndicator={false} >
             <View style={styles.page}>
@@ -14,18 +15,20 @@ const Home = () => {
                     <ScrollView horizontal showsHorizontalScrollIndicator={false}>
                         <View style={styles.category}>
                             <Gap width={16} />
-                            <DivisionCategory />
-                            <DivisionCategory />
-                            <DivisionCategory />
-                            <DivisionCategory />
+                            {
+                                JSONDivisionCategory.data.map((item => {
+                                    return <DivisionCategory key={item.id} divisi={item.divisi} onPress={() => navigation.navigate('ChooseUser', {divisi: item.divisi})} />
+                                }))
+                            }
+                            
                             <Gap width={6} />
                         </View>
                     </ScrollView>
                 </View>
                 <Text style={styles.sectionLabel}>Announcement</Text>
-                <NewsItem />
-                <NewsItem />
-                <NewsItem />
+                <NewsItem title="Pengumuman A" date="Today" picture={DummyNews} />
+                <NewsItem title="Pengumuman A" date="Today" picture={DummyNews} />
+                <NewsItem title="Pengumuman A" date="Today" picture={DummyNews} />
                 <Gap height={30} />
             </View>   
         </ScrollView>

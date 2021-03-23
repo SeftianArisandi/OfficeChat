@@ -7,6 +7,7 @@ import Home from './Home';
 import Messages from './Messages';
 import News from './News';
 import Profile from './Profile';
+import ChooseUser from './ChooseUser';
 
 export {Splash, 
     GetStarted, 
@@ -16,5 +17,6 @@ export {Splash,
     Home, 
     Messages, 
     News,
-    Profile
+    Profile,
+    ChooseUser
 };
