@@ -7,6 +7,7 @@ import {
   Splash,
   UploadPhoto,
   Profile,
+  ProfileEdit,
 } from '../pages';
 
 const Stack = createStackNavigator();
@@ -39,9 +40,16 @@ const Router = () => {
         component={UploadPhoto}
         options={{headerShown: false}}
       /> */}
+
       <Stack.Screen
         name="Profile"
         component={Profile}
+        options={{headerShown: false}}
+      />
+
+      <Stack.Screen
+        name="ProfileEdit"
+        component={ProfileEdit}
         options={{headerShown: false}}
       />
     </Stack.Navigator>

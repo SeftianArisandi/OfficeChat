@@ -1,39 +1,50 @@
 import React from 'react';
-import {View, Text, StyleSheet, Image} from 'react-native';
+import {View, ScrollView, Text, StyleSheet, Image} from 'react-native';
 import {ILNullPhoto} from '../assets';
-import {Button, Gap, Header, Link} from '../components';
+import {Button, Header, Link} from '../components';
 import {colors, fonts} from '../utils';
 
-const Profile = () => {
+const Profile = ({navigation}) => {
+  const handleGoto = screen => {
+    navigation.navigate(screen);
+  };
+
   return (
     <View style={styles.page}>
       <Header title="Profile" onPress={() => navigation.goBack()} />
-      <View style={styles.user}>
-        <View style={styles.wrapperIconUser}>
-          <Image source={ILNullPhoto} style={styles.iconUser} />
+      <ScrollView>
+        <View style={styles.user}>
+          <View style={styles.wrapperIconUser}>
+            <Image source={ILNullPhoto} style={styles.iconUser} />
+          </View>
         </View>
-      </View>
-      <View style={{marginHorizontal: 15}}>
-        <View>
-          <Text style={styles.title}>Full Name : </Text>
-          <Text style={styles.content}>Syaiful Nurrahman</Text>
+        <View style={{marginHorizontal: 15}}>
+          <View>
+            <Text style={styles.title}>Full Name : </Text>
+            <Text style={styles.content}>Syaiful Nurrahman</Text>
+          </View>
+          <View>
+            <Text style={styles.title}>Job Position : </Text>
+            <Text style={styles.content}>Lead Management</Text>
+          </View>
+          <View>
+            <Text style={styles.title}>Email Address : </Text>
+            <Text style={styles.content}>SyaifulNurrahman@gmail.com</Text>
+          </View>
+          <View>
+            <Text style={styles.title}>Division : </Text>
+            <Text style={styles.content}>Management</Text>
+          </View>
         </View>
-        <View>
-          <Text style={styles.title}>Job Position : </Text>
-          <Text style={styles.content}>Lead Management</Text>
+        <View style={{alignItems: 'center', marginTop: 15}}>
+          <View style={{width: 150}}>
+            <Button
+              title="Edit Profile"
+              onPress={() => handleGoto('ProfileEdit')}
+            />
+          </View>
         </View>
-        <View>
-          <Text style={styles.title}>Email Address : </Text>
-          <Text style={styles.content}>SyaifulNurrahman@gmail.com</Text>
-        </View>
-        <View>
-          <Text style={styles.title}>Division : </Text>
-          <Text style={styles.content}>Management</Text>
-        </View>
-      </View>
-      <View style={styles.wrapperButton}>
-        <Button title="Edit Profile" />
-      </View>
+      </ScrollView>
     </View>
   );
 };
@@ -46,36 +57,37 @@ const styles = StyleSheet.create({
     backgroundColor: 'ghostwhite',
   },
   user: {
-    marginTop: 20,
-    marginBottom: 30,
+    marginTop: 5,
+    marginBottom: 7,
     height: 150,
     alignItems: 'center',
     justifyContent: 'center',
     backgroundColor: 'ghostwhite',
+    borderTopWidth: 1,
+    borderTopColor: 'lightgray',
   },
   wrapperIconUser: {
     backgroundColor: 'white',
-    height: 130,
-    width: 130,
+    height: 110,
+    width: 110,
     borderWidth: 1,
     borderColor: colors.border,
     justifyContent: 'center',
     alignItems: 'center',
-    borderRadius: 130 / 2,
+    borderRadius: 110 / 2,
   },
   iconUser: {
-    height: 125,
-    width: 125,
+    height: 100,
+    width: 100,
   },
   title: {
-    fontSize: 16,
+    fontSize: 12,
+    fontFamily: fonts.primary.normal,
   },
   content: {
-    fontSize: 19,
-    fontWeight: 'bold',
-    paddingBottom: 20,
-  },
-  wrapperButton: {
-    marginTop: 30,
+    fontSize: 15,
+    fontFamily: fonts.primary[700],
+
+    paddingBottom: 10,
   },
 });
