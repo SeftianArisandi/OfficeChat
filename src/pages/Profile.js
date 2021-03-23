@@ -87,7 +87,6 @@ const styles = StyleSheet.create({
   content: {
     fontSize: 15,
     fontFamily: fonts.primary[700],
-
     paddingBottom: 10,
   },
 });
