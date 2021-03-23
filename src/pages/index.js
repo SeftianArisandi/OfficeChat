@@ -7,6 +7,7 @@ import Home from './Home';
 import Messages from './Messages';
 import News from './News';
 import Profile from './Profile';
+import ProfileEdit from './ProfileEdit';
 import ChooseUser from './ChooseUser';
 
 export {Splash, 
@@ -18,5 +19,6 @@ export {Splash,
     Messages, 
     News,
     Profile,
+    ProfileEdit,
     ChooseUser
 };
