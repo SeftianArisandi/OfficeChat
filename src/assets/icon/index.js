@@ -9,6 +9,8 @@ import IconHomeActive from './ic-home-active.svg';
 import IconMessagesActive from './ic-messages-active.svg';
 import IconNewsActive from './ic-news-active.svg';
 import IconNext from './ic-next.svg';
+import IconSendDark from './ic-send-dark.svg';
+import IconSendLight from './ic-send-light.svg';
 
 export {IconBackDark, 
     IconBackLight,
@@ -20,5 +22,7 @@ export {IconBackDark,
     IconHomeActive,
     IconMessagesActive,
     IconNewsActive,
-    IconNext
+    IconNext,
+    IconSendDark,
+    IconSendLight
 };

@@ -8,7 +8,7 @@ const ChooseUser = ({route, navigation}) => {
     return (
         <View>
             <Header title={`Divisi ${divisi}`} onPress={() => navigation.goBack()} type="dark" />
-            <ListMessage type="next" profile={DummyUser} name="Seftian Arisandi" desc="IT Manager" />
+            <ListMessage onPress={() => navigation.navigate('Chatting')} type="next" profile={DummyUser} name="Seftian Arisandi" desc="IT Manager" />
             <ListMessage type="next" profile={DummyUser} name="Maman" desc="Back End Programmer" />
             <ListMessage type="next" profile={DummyUser} name="Abdul Jarkoni" desc="Front End Programmer" />
             <ListMessage type="next" profile={DummyUser} name="Erlando" desc="Database" />
