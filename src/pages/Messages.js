@@ -4,7 +4,7 @@ import { DummyUser } from '../assets'
 import { ListMessage } from '../components'
 import { colors, fonts } from '../utils'
 
-const Messages = () => {
+const Messages = ({navigation}) => {
     const [messages] = useState([
         {
             id: 1,
@@ -30,7 +30,7 @@ const Messages = () => {
             <Text style={styles.title}>Messages</Text>
             {
                 messages.map(message => {
-                    return <ListMessage key={message.id} profile={message.profile} name={message.name} desc={message.desc} />
+                    return <ListMessage key={message.id} profile={message.profile} name={message.name} desc={message.desc} onPress={() => navigation.navigate('Chatting')} />
                 })
             }
         </View>

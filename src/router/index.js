@@ -1,7 +1,7 @@
 import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { GetStarted, Login, Register, Splash, UploadPhoto, Home, Messages, News, Profile, ProfileEdit, ChooseUser, Chatting } from '../pages';
+import { GetStarted, Login, Register, Splash, UploadPhoto, Home, Messages, News, Profile, ProfileEdit, ChooseUser, Chatting, UserProfile, UpdateProfile } from '../pages';
 import { BottomNavigator } from '../components';
 
 const Stack = createStackNavigator();
@@ -19,7 +19,7 @@ const MainApp = () => {
 
 const Router = () => {
     return (
-        <Stack.Navigator initialRouteName='MainApp'>
+        <Stack.Navigator initialRouteName='Splash'>
             <Stack.Screen name="Splash" component={Splash} options={{headerShown: false}} />
             <Stack.Screen name="GetStarted" component={GetStarted} options={{headerShown: false}} />
             <Stack.Screen name="Register" component={Register} options={{headerShown: false}} />
@@ -30,6 +30,8 @@ const Router = () => {
             <Stack.Screen name="MainApp" component={MainApp} options={{headerShown: false}} />
             <Stack.Screen name="ChooseUser" component={ChooseUser} options={{headerShown: false}} />
             <Stack.Screen name="Chatting" component={Chatting} options={{headerShown: false}} />
+            <Stack.Screen name="UserProfile" component={UserProfile} options={{headerShown: false}} />
+            <Stack.Screen name="UpdateProfile" component={UpdateProfile} options={{headerShown: false}} />
         </Stack.Navigator>
     )
 }

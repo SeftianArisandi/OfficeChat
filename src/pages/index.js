@@ -10,6 +10,8 @@ import Profile from './Profile';
 import ProfileEdit from './ProfileEdit';
 import ChooseUser from './ChooseUser';
 import Chatting from './Chatting';
+import UserProfile from './UserProfile';
+import UpdateProfile from './UpdateProfile';
 
 export {Splash, 
     GetStarted, 
@@ -22,5 +24,7 @@ export {Splash,
     Profile,
     ProfileEdit,
     ChooseUser,
-    Chatting
+    Chatting,
+    UserProfile,
+    UpdateProfile
 };

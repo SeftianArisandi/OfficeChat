@@ -9,7 +9,7 @@ const Home = ({navigation}) => {
         <ScrollView showsVerticalScrollIndicator={false} >
             <View style={styles.page}>
                 <Gap height={30} />
-                <HomeProfile />
+                <HomeProfile onPress={() => navigation.navigate('UserProfile')} />
                 <Text style={styles.welcome}>Mulai berkomunikasi dengan siapa hari ini?</Text>
                 <View style={styles.wrapperScroll}>
                     <ScrollView horizontal showsHorizontalScrollIndicator={false}>

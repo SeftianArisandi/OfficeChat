@@ -20,7 +20,7 @@ const UploadPhoto = ({navigation}) => {
                 <View>
                     <Button title="Upload and Continue" />
                     <Gap height={40} />
-                    <Link title="Skip for this" align="center" size={16} />
+                    <Link title="Skip for this" align="center" size={16} onPress={() => navigation.replace('MainApp')} />
                 </View>
             </View>
         </View>
@@ -60,8 +60,8 @@ const styles = StyleSheet.create({
     },
     addPhoto: {
         position: 'absolute',
-        bottom: 8,
-        right: 6
+        bottom: 4,
+        right: 4
     },
     name: {
         fontSize: 24,

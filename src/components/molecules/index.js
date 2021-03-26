@@ -6,6 +6,7 @@ import NewsItem from './NewsItem';
 import ListMessage from './ListMessage';
 import ChatItem from './ChatItem';
 import InputChat from './InputChat';
+import Profile from './Profile';
 
 export {
     Header, 
@@ -15,5 +16,6 @@ export {
     NewsItem, 
     ListMessage,
     ChatItem,
-    InputChat
+    InputChat,
+    Profile
 };

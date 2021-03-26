@@ -7,6 +7,6 @@ export const fonts = {
         700: 'Nunito-Bold',
         800: 'Nunito-ExtraBold',
         900: 'Nunito-Black',
-        normal: 'Nunito-Reguar'
+        normal: 'Nunito-Regular'
     }
 }
