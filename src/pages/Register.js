@@ -3,7 +3,9 @@ import { ScrollView, StyleSheet, View } from 'react-native'
 import { Button, Gap, Header, Input, Loading } from '../components'
 import { colors } from '../utils/colors'
 import auth from '@react-native-firebase/auth'
+import firestore from '@react-native-firebase/firestore'
 import { showMessage, hideMessage } from "react-native-flash-message"
+import { getData, storeData } from '../utils'
 
 const Register = ({navigation}) => {
     const [noKaryawan, setNoKaryawan] = useState('');
@@ -40,11 +42,24 @@ const Register = ({navigation}) => {
             email: email,
         };
         auth()
-            .createUserWithEmailAndPassword(dataUser.email, password)
+            .createUserWithEmailAndPassword(email, password)
             .then((success) => {
-                resetForm();
-                setLoading(false);
-                console.log(success);
+                firestore()
+                    .collection('users')
+                    .doc(success.user.uid)
+                    .set(dataUser)
+                    .then(() => {
+                        const data = {
+                            name: name,
+                            profession: profession,
+                            uid: success.user.uid
+                        }
+                        storeData('user', dataUser);
+                        resetForm();
+                        setLoading(false);
+                        navigation.navigate('UploadPhoto', data);
+                        console.log('register success');
+                    })
             })
             .catch((error) => {
                 const errorMessage = error.message
