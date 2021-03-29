@@ -1,35 +1,93 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { ScrollView, StyleSheet, View } from 'react-native'
-import { Button, Gap, Header, Input } from '../components'
+import { Button, Gap, Header, Input, Loading } from '../components'
 import { colors } from '../utils/colors'
+import auth from '@react-native-firebase/auth'
+import { showMessage, hideMessage } from "react-native-flash-message"
 
 const Register = ({navigation}) => {
+    const [noKaryawan, setNoKaryawan] = useState('');
+    const [name, setName] = useState('');
+    const [gender, setGender] = useState('');
+    const [bod, setBod] = useState('');
+    const [divisi, setDivisi] = useState('');
+    const [profession, setProfession] = useState('');
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    
+    const [loading, setLoading] = useState(false);
+
+    const resetForm = () => {
+        setNoKaryawan('');
+        setName('');
+        setGender('');
+        setBod('');
+        setDivisi('');
+        setProfession('');
+        setEmail('');
+        setPassword('');
+    }
+
+    const onContinue = () => {
+        setLoading(true);
+        const dataUser = {
+            noKaryawan: noKaryawan,
+            name: name,
+            gender: gender,
+            bod: bod,
+            divisi: divisi,
+            profession: profession,
+            email: email,
+        };
+        auth()
+            .createUserWithEmailAndPassword(dataUser.email, password)
+            .then((success) => {
+                resetForm();
+                setLoading(false);
+                console.log(success);
+            })
+            .catch((error) => {
+                const errorMessage = error.message
+                setLoading(false);
+                showMessage({
+                    message: errorMessage,
+                    type: 'default',
+                    backgroundColor: '#E06379',
+                    color: colors.white
+                });
+                console.log(error);
+            })
+    }
+
     return (
-        <View style={styles.page}>
-            <Header onPress={() => navigation.goBack()} title="Register" />
-            <View style={styles.content}>
-                <ScrollView showsVerticalScrollIndicator={false}>
-                    <Input label="Nomor Karyawan" />
-                    <Gap height={20} />
-                    <Input label="Nama Lengkap" />
-                    <Gap height={20} />
-                    <Input label="Jenis Kelamin" />
-                    <Gap height={20} />
-                    <Input label="Tanggal Lahir" />
-                    <Gap height={20} />
-                    <Input label="Divisi" />
-                    <Gap height={20} />
-                    <Input label="Posisi Pekerjaan" />
-                    <Gap height={20} />
-                    <Input label="Email Address" />
-                    <Gap height={20} />
-                    <Input label="Password" />
-                    <Gap height={30} />
-                    <Button title="Continue" onPress={() => navigation.navigate('UploadPhoto')} />
-                    <Gap height={60} />
-                </ScrollView>
+        <>
+            <View style={styles.page}>
+                <Header onPress={() => navigation.goBack()} title="Register" />
+                <View style={styles.content}>
+                    <ScrollView showsVerticalScrollIndicator={false}>
+                        <Input value={noKaryawan} onChangeText={(value) => setNoKaryawan(value)} label="Nomor Karyawan" />
+                        <Gap height={20} />
+                        <Input value={name} onChangeText={(value) => setName(value)} label="Nama Lengkap" />
+                        <Gap height={20} />
+                        <Input value={gender} onChangeText={(value) => setGender(value)} label="Jenis Kelamin" />
+                        <Gap height={20} />
+                        <Input value={bod} onChangeText={(value) => setBod(value)} label="Tanggal Lahir" />
+                        <Gap height={20} />
+                        <Input value={divisi} onChangeText={(value) => setDivisi(value)} label="Divisi" />
+                        <Gap height={20} />
+                        <Input value={profession} onChangeText={(value) => setProfession(value)} label="Posisi Pekerjaan" />
+                        <Gap height={20} />
+                        <Input value={email} onChangeText={(value) => setEmail(value)} label="Email Address" />
+                        <Gap height={20} />
+                        <Input value={password} onChangeText={(value) => setPassword(value)} secureTextEntry label="Password" />
+                        <Gap height={30} />
+                        <Button title="Continue" onPress={onContinue} />
+                        <Gap height={60} />
+                    </ScrollView>
+                </View>
             </View>
-        </View>
+            {loading && <Loading />}
+        </>
     )
 }
 

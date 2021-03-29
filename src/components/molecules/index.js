@@ -7,6 +7,7 @@ import ListMessage from './ListMessage';
 import ChatItem from './ChatItem';
 import InputChat from './InputChat';
 import Profile from './Profile';
+import Loading from './Loading';
 
 export {
     Header, 
@@ -17,5 +18,6 @@ export {
     ListMessage,
     ChatItem,
     InputChat,
-    Profile
+    Profile,
+    Loading
 };

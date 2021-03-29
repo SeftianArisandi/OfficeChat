@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "931119234988",
+    "project_id": "office-chat-6500d",
+    "storage_bucket": "office-chat-6500d.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:931119234988:android:b8bac3422a4e4b06148409",
+        "android_client_info": {
+          "package_name": "com.officechat"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "931119234988-scne0j45qd3r07d20v9d8q0l4fn1rsck.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyArJ7Jlix-6bW2-DCfoMAKYLziQ1aC8Nsw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "931119234988-scne0j45qd3r07d20v9d8q0l4fn1rsck.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
