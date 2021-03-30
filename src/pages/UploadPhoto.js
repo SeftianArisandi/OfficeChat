@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import { IconAddPhoto, IconRemovePhoto, ILNullPhoto } from '../assets'
 import { Button, Gap, Header, Link } from '../components'
-import { colors, fonts } from '../utils'
+import { colors, fonts, storeData } from '../utils'
 import { launchImageLibrary } from 'react-native-image-picker'
 import { showMessage, hideMessage } from "react-native-flash-message"
 import firestore from '@react-native-firebase/firestore'
@@ -16,7 +16,10 @@ const UploadPhoto = ({navigation, route}) => {
     const getImage = () => {
         const options = {
             mediaType: 'photo',
-            includeBase64: true
+            includeBase64: true,
+            quality: 0.5,
+            maxWidth: 200,
+            maxHeight: 200
         };
         launchImageLibrary(options, (response) => {
             if (response.didCancel || response.error) {
@@ -40,6 +43,11 @@ const UploadPhoto = ({navigation, route}) => {
             .collection('users')
             .doc(uid)
             .update({photo: photoForDB});
+
+        const data = route.params;
+        data.photo = photoForDB;
+        storeData('user', data);
+        
         navigation.replace('MainApp');
     }
 

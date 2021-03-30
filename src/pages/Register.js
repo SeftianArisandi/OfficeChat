@@ -5,7 +5,7 @@ import { colors } from '../utils/colors'
 import auth from '@react-native-firebase/auth'
 import firestore from '@react-native-firebase/firestore'
 import { showMessage, hideMessage } from "react-native-flash-message"
-import { getData, storeData } from '../utils'
+import { storeData } from '../utils'
 
 const Register = ({navigation}) => {
     const [noKaryawan, setNoKaryawan] = useState('');
@@ -52,6 +52,7 @@ const Register = ({navigation}) => {
                         const data = {
                             name: name,
                             profession: profession,
+                            email: email,
                             uid: success.user.uid
                         }
                         storeData('user', dataUser);

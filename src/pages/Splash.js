@@ -1,12 +1,22 @@
 import React, {useEffect} from 'react'
 import { StyleSheet, Text, View } from 'react-native'
 import { ILLogo } from '../assets'
-import { colors, fonts } from '../utils'
+import { colors, fonts, storeData } from '../utils'
+import auth from '@react-native-firebase/auth'
 
 const Splash = ({navigation}) => {
   useEffect(() => {
     setTimeout(() => {
-      navigation.replace('GetStarted');
+      auth()
+        .onAuthStateChanged((user) => {
+          if(user){
+            // console.log(user.uid);
+            storeData('uid', {uid: user.uid});
+            navigation.replace('MainApp');
+          }else{
+            navigation.replace('GetStarted');
+          }
+        })
     }, 3000)
   }, [])
   

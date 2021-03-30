@@ -20,7 +20,6 @@ const Home = ({navigation}) => {
                                     return <DivisionCategory key={item.id} divisi={item.divisi} onPress={() => navigation.navigate('ChooseUser', {divisi: item.divisi})} />
                                 }))
                             }
-                            
                             <Gap width={6} />
                         </View>
                     </ScrollView>
