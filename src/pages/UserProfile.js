@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react'
 import { ScrollView, StyleSheet, View } from 'react-native'
 import { Button, DataProfile, Gap, Header, Profile } from '../components'
-import { colors, getData, storeData } from '../utils'
-import firestore from '@react-native-firebase/firestore'
+import { colors, getData } from '../utils'
+import { showMessage } from "react-native-flash-message"
+import auth from '@react-native-firebase/auth';
 
 const UserProfile = ({navigation}) => {
     const [profile, setProfile] = useState({
@@ -15,6 +16,7 @@ const UserProfile = ({navigation}) => {
         email: '',
         uid: ''
     });
+
     useEffect(() => {
         getData('uid').then((getuid) => {
             getData('user').then((response) => {
@@ -26,6 +28,24 @@ const UserProfile = ({navigation}) => {
             });
         })
     }, []);
+
+    const signOut = () => {
+        auth()
+            .signOut()
+            .then((res) => {
+                console.log('success sign out');
+                navigation.replace('GetStarted');
+            })
+            .catch((err) => {
+                showMessage({
+                    message: err.message,
+                    type: 'default',
+                    backgroundColor: '#E06379',
+                    color: colors.white
+                });
+            })
+    };
+
     return (
         <View style={styles.page}>
             <Header title="Profile" onPress={() => navigation.goBack()}/>
@@ -41,6 +61,8 @@ const UserProfile = ({navigation}) => {
                     <DataProfile dataName="Jenis Kelamin" dataValue={profile.gender} />
                     <Gap height={20} />
                     <Button title="Edit Profile" onPress={() => navigation.navigate('UpdateProfile')}/>
+                    <Gap height={20} />
+                    <Button title="Sign Out" onPress={signOut}/>
                     <Gap height={30} />
                 </View>
             </ScrollView>

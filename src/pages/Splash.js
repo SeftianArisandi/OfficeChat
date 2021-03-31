@@ -6,19 +6,19 @@ import auth from '@react-native-firebase/auth'
 
 const Splash = ({navigation}) => {
   useEffect(() => {
-    setTimeout(() => {
-      auth()
-        .onAuthStateChanged((user) => {
+    const unsubscribe = auth()
+      .onAuthStateChanged((user) => {
+        setTimeout(() => {
           if(user){
-            // console.log(user.uid);
             storeData('uid', {uid: user.uid});
             navigation.replace('MainApp');
           }else{
             navigation.replace('GetStarted');
           }
-        })
-    }, 3000)
-  }, [])
+        }, 3000);
+      });
+    return () => unsubscribe();
+  }, []);
   
   return (
     <View style={styles.page}>
