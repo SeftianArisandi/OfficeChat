@@ -10,8 +10,7 @@ const Splash = ({navigation}) => {
       .onAuthStateChanged((user) => {
         setTimeout(() => {
           if(user){
-            storeData('uid', {uid: user.uid});
-            navigation.replace('MainApp');
+            navigation.replace('GetStarted');
           }else{
             navigation.replace('GetStarted');
           }

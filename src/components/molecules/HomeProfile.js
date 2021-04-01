@@ -9,18 +9,15 @@ const HomeProfile = ({onPress}) => {
         name: '',
         profession: ''
     });
+
     useEffect(() => {
-        getData('uid').then((getuid) => {
-            getData('user').then((response) => {
-                // console.log('profile: ',response);
-                const data = response;
-                data.photo = {uri: response.photo};
-                data.uid = getuid.uid;
-                // console.log('new profile: ',response);
-                setProfile(response);
-            });
+        getData('user').then((response) => {
+            const data = response;
+            data.photo = {uri: response.photo};
+            setProfile(response);
         });
     }, []);
+    
     return (
         <TouchableOpacity style={styles.container} onPress={onPress}>
             <Image source={profile.photo} style={styles.avatar} />

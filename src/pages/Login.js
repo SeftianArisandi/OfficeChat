@@ -32,7 +32,9 @@ const Login = ({navigation}) => {
                 user.then(res => {
                     const data = res;
                     const dataUser = data._data;
+                    dataUser.uid = success.user.uid;
                     if (dataUser) {
+                        // console.log('Login: ',dataUser);
                         storeData('user', dataUser);
                     }
                     dispatch({type: 'SET_LOADING', value: false});

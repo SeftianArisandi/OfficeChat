@@ -1,14 +1,16 @@
 import React, { useState, useEffect } from 'react'
 import { ScrollView, StyleSheet, View } from 'react-native'
 import { Button, Gap, Header, Input, Profile } from '../components'
-import { colors, getData, storeData } from '../utils'
-import { showMessage, hideMessage } from "react-native-flash-message"
+import { colors, getData, showError, storeData } from '../utils'
 import { launchImageLibrary } from 'react-native-image-picker'
 import { ILNullPhoto } from '../assets'
+import { useDispatch } from 'react-redux';
 import firestore from '@react-native-firebase/firestore'
 import auth from '@react-native-firebase/auth'
 
 const UpdateProfile = ({navigation}) => {
+    const dispatch = useDispatch();
+
     const [profile, setProfile] = useState({
         noKaryawan: '',
         name: '',
@@ -17,43 +19,47 @@ const UpdateProfile = ({navigation}) => {
         divisi: '',
         profession: '',
         email: '',
-        uid: ''
+        uid: '',
+        photo: '',
     });
     const [password, setPassword] = useState('');
     const [photo, setPhoto] = useState(ILNullPhoto);
     const [photoForDB, setPhotoForDB] = useState('');
 
+    const testLoading = () => {
+        dispatch({type: 'SET_LOADING', value: true});
+        setTimeout(() => {
+            dispatch({type: 'SET_LOADING', value: false});
+        }, 2000)
+    }
+
     useEffect(() => {
-        getData('uid').then((getuid) => {
-            getData('user').then((response) => {
-                const data = response;
-                setPhoto({uri: response.photo});
-                data.uid = getuid.uid;
-                setProfile(data);
-                // storeData('user', data);
-            });
-        })
+        getData('user').then((response) => {
+            const data = response;
+            data.photo = {uri: response.photo};
+            setProfile(response);
+            setPhoto(data.photo);
+        });
     }, []);
 
     const update = () => {
+        dispatch({type: 'SET_LOADING', value: true});
         if(password.length > 0){
             if(password.length < 6){
-                showMessage({
-                    message: 'Password kurang dari 6 karakter',
-                    type: 'default',
-                    backgroundColor: '#E06379',
-                    color: colors.white
-                });
+                dispatch({type: 'SET_LOADING', value: false});
+                showError('Password kurang dari 6 karakter');
             }else{
                 updatePassword();
                 updateProfileData();
                 setTimeout(() => {
+                    dispatch({type: 'SET_LOADING', value: false});
                     navigation.replace('MainApp');
                 }, 2000);
             }
         }else{
             updateProfileData();
             setTimeout(() => {
+                dispatch({type: 'SET_LOADING', value: false});
                 navigation.replace('MainApp');
             }, 2000);
         }
@@ -65,7 +71,7 @@ const UpdateProfile = ({navigation}) => {
                 if(user){
                     user.updatePassword(password)
                     .catch(err => {
-                        console.log(err);
+                        // console.log(err);
                     });
                 }
             });
@@ -79,18 +85,12 @@ const UpdateProfile = ({navigation}) => {
         firestore()
             .collection('users')
             .doc(profile.uid)
-            .update(profile)
+            .update(data)
             .then(() => {
-                console.log('success update: ', data);
                 storeData('user', data);
             })
             .catch(err => {
-                showMessage({
-                    message: err.message,
-                    type: 'default',
-                    backgroundColor: '#E06379',
-                    color: colors.white
-                });
+                showError(err.message);
             });
     };
 
@@ -111,23 +111,17 @@ const UpdateProfile = ({navigation}) => {
         };
         launchImageLibrary(options, (response) => {
             if (response.didCancel || response.error) {
-                showMessage({
-                    message: 'oops, sepertinya anda tidak memilih fotonya ?',
-                    type: 'default',
-                    backgroundColor: '#E06379',
-                    color: colors.white
-                });
+                showError('oops, sepertinya anda tidak memilih fotonya ?');
             } else {
                 setPhotoForDB(`data:${response.type};base64, ${response.base64}`);
                 setPhoto({uri: response.uri});
-                console.log(response);
             }
         });
     };
 
     return (
         <View style={styles.page}>
-            <Header title="Edit Profile" onPress={() => navigation.goBack()} />
+            <Header title="Edit Profile" onPress={() => navigation.navigate('UserProfile')} />
             <ScrollView showsVerticalScrollIndicator={false}>
                 <View style={styles.content}>
                     <Profile photo={photo} onPress={getImage} isRemove />

@@ -2,9 +2,8 @@ import React, { useState } from 'react'
 import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import { IconAddPhoto, IconRemovePhoto, ILNullPhoto } from '../assets'
 import { Button, Gap, Header, Link } from '../components'
-import { colors, fonts, storeData } from '../utils'
+import { colors, fonts, showError, storeData } from '../utils'
 import { launchImageLibrary } from 'react-native-image-picker'
-import { showMessage, hideMessage } from "react-native-flash-message"
 import firestore from '@react-native-firebase/firestore'
 
 const UploadPhoto = ({navigation, route}) => {
@@ -23,12 +22,7 @@ const UploadPhoto = ({navigation, route}) => {
         };
         launchImageLibrary(options, (response) => {
             if (response.didCancel || response.error) {
-                showMessage({
-                    message: 'oops, sepertinya anda tidak memilih fotonya ?',
-                    type: 'default',
-                    backgroundColor: '#E06379',
-                    color: colors.white
-                });
+                showError('oops, sepertinya anda tidak memilih fotonya ?');
             } else {
                 setPhotoForDB(`data:${response.type};base64, ${response.base64}`);
                 setPhoto({uri: response.uri});
@@ -43,11 +37,9 @@ const UploadPhoto = ({navigation, route}) => {
             .collection('users')
             .doc(uid)
             .update({photo: photoForDB});
-
         const data = route.params;
         data.photo = photoForDB;
         storeData('user', data);
-        
         navigation.replace('MainApp');
     }
 

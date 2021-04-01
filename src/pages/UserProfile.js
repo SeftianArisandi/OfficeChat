@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { ScrollView, StyleSheet, View } from 'react-native'
 import { Button, DataProfile, Gap, Header, Profile } from '../components'
-import { colors, getData } from '../utils'
-import { showMessage } from "react-native-flash-message"
+import { colors, getData, showError } from '../utils'
 import auth from '@react-native-firebase/auth';
 
 const UserProfile = ({navigation}) => {
@@ -14,41 +13,32 @@ const UserProfile = ({navigation}) => {
         divisi: '',
         profession: '',
         email: '',
-        uid: ''
+        uid: '',
+        photo: '',
     });
 
     useEffect(() => {
-        getData('uid').then((getuid) => {
-            getData('user').then((response) => {
-                const data = response;
-                data.photo = {uri: response.photo};
-                data.uid = getuid.uid;
-                setProfile(data);
-                // storeData('user', data);
-            });
-        })
+        getData('user').then((response) => {
+            const data = response;
+            data.photo = {uri: response.photo};
+            setProfile(response);
+        });
     }, []);
 
     const signOut = () => {
         auth()
             .signOut()
-            .then((res) => {
-                console.log('success sign out');
+            .then(() => {
                 navigation.replace('GetStarted');
             })
             .catch((err) => {
-                showMessage({
-                    message: err.message,
-                    type: 'default',
-                    backgroundColor: '#E06379',
-                    color: colors.white
-                });
+                showError(err.message)
             })
     };
 
     return (
         <View style={styles.page}>
-            <Header title="Profile" onPress={() => navigation.goBack()}/>
+            <Header title="Profile" onPress={() => navigation.navigate('MainApp')}/>
             <ScrollView showsVerticalScrollIndicator={false}>
                 <View style={styles.content}>
                     <Gap height={10} />
@@ -60,7 +50,7 @@ const UserProfile = ({navigation}) => {
                     <DataProfile dataName="Tanggal Lahir" dataValue={profile.bod} />
                     <DataProfile dataName="Jenis Kelamin" dataValue={profile.gender} />
                     <Gap height={20} />
-                    <Button title="Edit Profile" onPress={() => navigation.navigate('UpdateProfile')}/>
+                    <Button title="Edit Profile" onPress={() => navigation.replace('UpdateProfile')}/>
                     <Gap height={20} />
                     <Button title="Sign Out" onPress={signOut}/>
                     <Gap height={30} />
