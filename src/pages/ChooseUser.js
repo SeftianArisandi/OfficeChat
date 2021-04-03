@@ -1,18 +1,47 @@
-import React from 'react'
-import { StyleSheet, Text, View } from 'react-native'
-import { DummyUser } from '../assets'
+import React, { useState ,useEffect } from 'react'
+import { StyleSheet, View, Text } from 'react-native'
 import { Header, ListMessage } from '../components'
+import firestore from '@react-native-firebase/firestore'
+import { getData } from '../utils'
 
 const ChooseUser = ({route, navigation}) => {
-    const {divisi} = route.params
+    const {category} = route.params;
+    const [profile, setProfile] = useState();
+    const [listUser, setListUser] = useState([]);
+
+    useEffect(() => {
+        getData('user').then((response) => {
+            const data = response;
+            setProfile(response);
+            callUserByCategory(category);
+        });
+    }, []);
+
+    const callUserByCategory = (category) => {
+        firestore()
+            .collection('users')
+            .where('divisi', '==', category)
+            .get()
+            .then((success) => {
+                if(success.docs.length < 1){
+                    setListUser('empty');
+                }
+                setListUser(success.docs);
+            })
+            .catch((error) => {
+                console.log(error);
+            });
+    };
+
     return (
         <View>
-            <Header title={`Divisi ${divisi}`} onPress={() => navigation.goBack()} type="dark" />
-            <ListMessage onPress={() => navigation.navigate('Chatting')} type="next" profile={DummyUser} name="Seftian Arisandi" desc="IT Manager" />
-            <ListMessage type="next" profile={DummyUser} name="Maman" desc="Back End Programmer" />
-            <ListMessage type="next" profile={DummyUser} name="Abdul Jarkoni" desc="Front End Programmer" />
-            <ListMessage type="next" profile={DummyUser} name="Erlando" desc="Database" />
-            <ListMessage type="next" profile={DummyUser} name="Nurul Hasnah" desc="UI/UX Designer" />
+            <Header title={`Divisi ${category}`} onPress={() => navigation.goBack()} type="dark" />
+            {
+                listUser && listUser.map((user) => {
+                if(user._data.uid != profile.uid){
+                    return <ListMessage key={user._data.uid} onPress={() => navigation.navigate('Chatting', user._data)} type="next" profile={{uri: user._data.photo}} name={user._data.name} desc={user._data.profession} />;
+                }})
+            }
         </View>
     )
 }

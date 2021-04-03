@@ -4,15 +4,15 @@ import { DummyUser } from '../../assets'
 import { colors, fonts } from '../../utils'
 import { Button } from '../atoms'
 
-const HeaderDarkProfile = ({onPress}) => {
+const HeaderDarkProfile = ({name, profession, photo, onPress}) => {
     return (
         <View style={styles.container}>
             <Button type="icon-only" icon="back-light" onPress={onPress} />
             <View style={styles.content}>
-                <Text style={styles.name}>Seftian Arisandi</Text>
-                <Text style={styles.jobPosition}>IT Manager</Text>
+                <Text style={styles.name}>{name}</Text>
+                <Text style={styles.jobPosition}>{profession}</Text>
             </View>
-            <Image source={DummyUser} style={styles.avatar} />
+            <Image source={photo} style={styles.avatar} />
         </View>
     )
 }
@@ -22,7 +22,7 @@ export default HeaderDarkProfile
 const styles = StyleSheet.create({
     container: {
         backgroundColor: colors.secondary,
-        paddingVertical: 20,
+        paddingVertical: 12,
         paddingLeft: 20,
         paddingRight: 16,
         flexDirection: 'row',

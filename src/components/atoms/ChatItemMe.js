@@ -25,11 +25,11 @@ const styles = StyleSheet.create({
         padding: 12,
         paddingRight: 18,
         backgroundColor: colors.cardLight,
-        maxWidth: '70%',
+        maxWidth: '75%',
         borderRadius: 10
     },
     text: {
-        fontSize: 12,
+        fontSize: 14,
         fontFamily: fonts.primary.normal,
         color: colors.text.primary
     },

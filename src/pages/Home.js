@@ -1,10 +1,25 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import { ScrollView, StyleSheet, Text, View } from 'react-native'
-import { DummyNews, JSONDivisionCategory } from '../assets'
+import { DummyNews } from '../assets'
 import { DivisionCategory, Gap, HomeProfile, NewsItem } from '../components'
 import { colors, fonts } from '../utils'
+import firestore from '@react-native-firebase/firestore'
 
 const Home = ({navigation}) => {
+    const [categoryDivision, setCategoryDivision] = useState([]);
+
+    useEffect(() => {
+        firestore()
+            .collection('category_division')
+            .get()
+            .then(success => {
+                setCategoryDivision(success.docs);
+            })
+            .catch(error => {
+                console.log(error);
+            });
+    }, [])
+
     return (
         <ScrollView showsVerticalScrollIndicator={false} >
             <View style={styles.page}>
@@ -16,8 +31,8 @@ const Home = ({navigation}) => {
                         <View style={styles.category}>
                             <Gap width={16} />
                             {
-                                JSONDivisionCategory.data.map((item => {
-                                    return <DivisionCategory key={item.id} divisi={item.divisi} onPress={() => navigation.navigate('ChooseUser', {divisi: item.divisi})} />
+                                categoryDivision.map((item => {
+                                    return <DivisionCategory key={item._data.id} divisi={item._data.category} onPress={() => navigation.navigate('ChooseUser', {category: item._data.category})} />
                                 }))
                             }
                             <Gap width={6} />

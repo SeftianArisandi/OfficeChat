@@ -40,7 +40,7 @@ const styles = StyleSheet.create({
         borderRadius: 10
     },
     text: {
-        fontSize: 12,
+        fontSize: 14,
         fontFamily: fonts.primary.normal,
         color: colors.white
     },
