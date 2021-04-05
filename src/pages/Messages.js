@@ -1,38 +1,32 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { StyleSheet, Text, View } from 'react-native'
 import { DummyUser } from '../assets'
 import { ListMessage } from '../components'
-import { colors, fonts } from '../utils'
+import { colors, fonts, getData } from '../utils'
+import firestore from '@react-native-firebase/firestore'
 
 const Messages = ({navigation}) => {
-    const [messages] = useState([
-        {
-            id: 1,
-            profile: DummyUser,
-            name: 'Alexander Jannie',
-            desc: 'Baik ibu, terima kasih banyak atas wakt...'
-        },
-        {
-            id: 2,
-            profile: DummyUser,
-            name: 'Nairobi Putri Hayza',
-            desc: 'Oh tentu saja tidak karena jeruk it...'
-        },
-        {
-            id: 3,
-            profile: DummyUser,
-            name: 'John McParker Steve',
-            desc: 'Oke menurut pak dokter bagaimana unt...'
-        }
-    ])
+    const [user, setUser] = useState({});
+    const [messages, setMessages] = useState({});
+
+    useEffect(() => {
+        getData('user')
+        .then(response => {
+            setUser(response);
+        });
+        firestore()
+            .collection('messages')
+            .doc(user.uid)
+            .get()
+            .then(response => {
+                setMessages(response._data);
+            })
+    }, []);
+
     return (
         <View style={styles.page}>
             <Text style={styles.title}>Messages</Text>
-            {
-                messages.map(message => {
-                    return <ListMessage key={message.id} profile={message.profile} name={message.name} desc={message.desc} onPress={() => navigation.navigate('Chatting')} />
-                })
-            }
+                <ListMessage profile={DummyUser} name="Jefri Ronaldo" desc="Oke" onPress={() => navigation.navigate('Chatting')} type="next" />
         </View>
     )
 }

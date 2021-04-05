@@ -1,17 +1,17 @@
 import React from 'react'
-import { Image, StyleSheet, Text, View } from 'react-native'
+import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import { DummyNews } from '../../assets'
 import { colors, fonts } from '../../utils'
 
-const NewsItem = ({title, date, picture}) => {
+const NewsItem = ({title, date, picture, onPress}) => {
     return (
-        <View style={styles.container}>
+        <TouchableOpacity style={styles.container} onPress={onPress}>
             <View style={styles.titleWrapper}>
                 <Text style={styles.title}>{title}</Text>
                 <Text style={styles.date}>{date}</Text>
             </View>
             <Image source={picture} style={styles.image} />
-        </View>
+        </TouchableOpacity>
     )
 }
 

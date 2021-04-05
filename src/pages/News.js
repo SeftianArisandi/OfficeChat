@@ -4,7 +4,7 @@ import { DummyNews, ILNewsBg } from '../assets'
 import { NewsItem } from '../components'
 import { colors, fonts } from '../utils'
 
-const News = () => {
+const News = ({navigation}) => {
     return (
         <View style={styles.page}>
             <ImageBackground source={ILNewsBg} style={styles.background}>
@@ -12,9 +12,9 @@ const News = () => {
                 <Text style={styles.desc}>3 Tersedia</Text>
             </ImageBackground>
             <View style={styles.content}>
-                <NewsItem title="Pengumuman A" date="Today" picture={DummyNews} />
-                <NewsItem title="Pengumuman B" date="Today" picture={DummyNews} />
-                <NewsItem title="Pengumuman C" date="Today" picture={DummyNews} />
+                <NewsItem title="Pengumuman A" date="Today" picture={DummyNews} onPress={() => navigation.navigate('NewsDetail', {title: "Pengumuman A"})} />
+                <NewsItem title="Pengumuman B" date="Today" picture={DummyNews} onPress={() => navigation.navigate('NewsDetail', {title: "Pengumuman B"})} />
+                <NewsItem title="Pengumuman C" date="Today" picture={DummyNews} onPress={() => navigation.navigate('NewsDetail', {title: "Pengumuman C"})} />
             </View>
         </View>
     )

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { ScrollView, StyleSheet, Text, View } from 'react-native'
+import { ScrollView, StyleSheet, View } from 'react-native'
 import { ChatItem, Header, InputChat } from '../components'
 import { colors, fonts, getData, showError } from '../utils'
 import firestore from '@react-native-firebase/firestore'
@@ -8,26 +8,24 @@ const Chatting = ({navigation, route}) => {
     const otherUser = route.params;
     const [chatContent, setChatContent] = useState("");
     const [user, setUser] = useState({});
-    const [chatAll, setChatAll] = useState([]);
+    const [chatData, setChatData] = useState([]);
 
     useEffect(() => {
         getData('user')
         .then(response => {
             setUser(response);
         });
-        setTimeout(() => {
-            const today = new Date();
-            const year = today.getFullYear();
-            const month = today.getMonth() + 1;
-            const date = today.getDate();
-            firestore()
-                .collection('chatting')
-                .doc(`${user.uid}_${otherUser.uid}`)
-                .collection(`${year}-${month}-${date}`)
-                .onSnapshot((querySnapshot) => {
-                    console.log(querySnapshot.docs);
-                });
-        }, 1000);
+        const today = new Date();
+        const year = today.getFullYear();
+        const month = today.getMonth() + 1;
+        const date = today.getDate();
+        firestore()
+            .collection('chatting')
+            .doc(`${user.uid}_${otherUser.uid}`)
+            .collection(`${year}-${month}-${date}`)
+            .onSnapshot((querySnapshot) => {
+                setChatData(querySnapshot.docs);
+            });
     }, []);
 
     const chatSend = () => {
@@ -53,22 +51,52 @@ const Chatting = ({navigation, route}) => {
             .doc(`${user.uid}${otherUser.uid}${time}`)
             .set(data)
             .then(() => {
-                // console.log('success');
+                const dataHistoryUser = {
+                    lastContentChat: chatContent,
+                    lastChatDate: today.getTime(),
+                    uidPartner: otherUser.uid,
+                    photo: otherUser.photo
+                };
+                const dataHistoryOther = {
+                    lastContentChat: chatContent,
+                    lastChatDate: today.getTime(),
+                    uidPartner: user.uid
+                };
+                firestore()
+                    .collection('messages')
+                    .doc(`${user.uid}`)
+                    .set({
+                        [`${user.uid}_${otherUser.uid}`]: dataHistoryUser
+                    });
+                firestore()
+                    .collection('messages')
+                    .doc(`${otherUser.uid}`)
+                    .set({
+                        [`${user.uid}_${otherUser.uid}`]: dataHistoryOther
+                    });
             })
             .catch(error => {
                 showError(error.message);
             })
     };
 
+    console.log('chatData', chatData);
+
     return (
         <View style={styles.page}>
             <Header title={otherUser.name} profession={otherUser.profession} photo={{uri: otherUser.photo}} type="dark-profile" onPress={() => navigation.goBack()} />
             <View style={styles.content}>
                 <ScrollView showsVerticalScrollIndicator={false}>
-                    <Text style={styles.chatDate}>Senin, 24 Maret 2020</Text>
-                    <ChatItem isMe />
-                    <ChatItem />
-                    <ChatItem isMe />
+                    {chatData && chatData.map((chat, id) => {
+                        const isMe = chat._data.sendBy === user.uid;
+                        return <ChatItem 
+                            key={id} 
+                            isMe={isMe} 
+                            text={chat._data.chatContent} 
+                            date={chat._data.chatTime} 
+                            photo={isMe ? null : {uri: otherUser.photo}}
+                        />
+                    })}
                 </ScrollView>
             </View>
             <InputChat 
