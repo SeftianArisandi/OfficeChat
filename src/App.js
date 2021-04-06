@@ -21,7 +21,7 @@ const MainApp = () => {
 }
 
 const App = () => {
-  LogBox.ignoreLogs(['Setting a timer', 'Warning: Each', 'Warning: Failed']);
+  LogBox.ignoreLogs(['Warning: ...']);
   return (
     <Provider store={store}>
       <MainApp />
