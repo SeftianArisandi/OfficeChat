@@ -10,10 +10,14 @@ const ChooseUser = ({route, navigation}) => {
     const [listUser, setListUser] = useState([]);
 
     useEffect(() => {
+        let mounted = true;
         getData('user').then((response) => {
-            setProfile(response);
-            callUserByCategory(category);
+            if(mounted){
+                setProfile(response);
+                callUserByCategory(category);
+            }
         });
+        return () => mounted = false;
     }, []);
 
     const callUserByCategory = (category) => {

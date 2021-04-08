@@ -12,27 +12,36 @@ const Chatting = ({navigation, route}) => {
     const [chatData, setChatData] = useState([]);
 
     useEffect(() => {
+        let mounted = true;
         getData('user')
         .then(response => {
-            setUser(response);
+            if(mounted){
+                setUser(response);
+            }
         });
+        return () => mounted = false;
     }, []);
 
     useEffect(() => {
         setTimeout(() => {
+            let mounted = true;
             firestore()
                 .collection('users')
                 .doc(uid)
                 .get()
                 .then(res => {
-                    const data = res;
-                    const dataUser = data._data;
-                    setOtherUser(dataUser);
+                    if(mounted){
+                        const data = res;
+                        const dataUser = data._data;
+                        setOtherUser(dataUser);
+                    }
                 })
+            return () => mounted = false;
         }, 300);
     }, []);
 
     useEffect(() => {
+        let mounted = true;
         const today = new Date();
         const year = today.getFullYear();
         const month = today.getMonth() + 1;
@@ -42,8 +51,11 @@ const Chatting = ({navigation, route}) => {
             .doc(`${user.uid}_${otherUser.uid}`)
             .collection(`${year}-${month}-${date}`)
             .onSnapshot((querySnapshot) => {
-                setChatData(querySnapshot.docs);
+                if(mounted){
+                    setChatData(querySnapshot.docs);
+                }
             });
+        return () => mounted = false;
     }, [user, otherUser]);
 
     const chatSend = () => {

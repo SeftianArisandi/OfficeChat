@@ -9,15 +9,19 @@ const Home = ({navigation}) => {
     const [categoryDivision, setCategoryDivision] = useState([]);
 
     useEffect(() => {
+        let mounted = true;
         firestore()
             .collection('category_division')
             .get()
             .then(success => {
-                setCategoryDivision(success.docs);
+                if(mounted){
+                    setCategoryDivision(success.docs);
+                }
             })
             .catch(error => {
                 console.log(error);
             });
+        return () => mounted = false;
     }, [])
 
     return (

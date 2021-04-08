@@ -10,6 +10,7 @@ const Messages = ({navigation}) => {
     const [messages, setMessages] = useState([]);
 
     useEffect(() => {
+        let mounted = true;
         getData('user')
         .then(response => {
             setUser(response);
@@ -17,6 +18,7 @@ const Messages = ({navigation}) => {
     }, []);
 
     useEffect(() => {
+        let mounted = true;
         const today = new Date();
         const year = today.getFullYear();
         const month = today.getMonth() + 1;
@@ -26,8 +28,11 @@ const Messages = ({navigation}) => {
             .doc(`${user.uid}`)
             .collection(`${year}-${month}-${date}`)
             .onSnapshot((querySnapshot) => {
-                setMessages(querySnapshot.docs);
+                if(mounted){
+                    setMessages(querySnapshot.docs);
+                }
             });
+        return () => mounted = false;
     }, [user]);
 
     return (
