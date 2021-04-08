@@ -15,6 +15,9 @@ const Chatting = ({navigation, route}) => {
         .then(response => {
             setUser(response);
         });
+    }, []);
+
+    useEffect(() => {
         const today = new Date();
         const year = today.getFullYear();
         const month = today.getMonth() + 1;
@@ -26,7 +29,7 @@ const Chatting = ({navigation, route}) => {
             .onSnapshot((querySnapshot) => {
                 setChatData(querySnapshot.docs);
             });
-    }, []);
+    }, [user]);
 
     const chatSend = () => {
         const today = new Date();
@@ -53,34 +56,48 @@ const Chatting = ({navigation, route}) => {
             .then(() => {
                 const dataHistoryUser = {
                     lastContentChat: chatContent,
-                    lastChatDate: today.getTime(),
+                    lastChatDate: time,
                     uidPartner: otherUser.uid,
-                    photo: otherUser.photo
-                };
-                const dataHistoryOther = {
-                    lastContentChat: chatContent,
-                    lastChatDate: today.getTime(),
-                    uidPartner: user.uid
+                    photo: otherUser.photo,
+                    name: otherUser.name
                 };
                 firestore()
                     .collection('messages')
                     .doc(`${user.uid}`)
-                    .set({
-                        [`${user.uid}_${otherUser.uid}`]: dataHistoryUser
-                    });
-                firestore()
-                    .collection('messages')
+                    .collection(`${year}-${month}-${date}`)
                     .doc(`${otherUser.uid}`)
-                    .set({
-                        [`${user.uid}_${otherUser.uid}`]: dataHistoryOther
-                    });
+                    .set(dataHistoryUser);
             })
             .catch(error => {
                 showError(error.message);
+            });
+        firestore()
+            .collection('chatting')
+            .doc(`${otherUser.uid}_${user.uid}`)
+            .collection(`${year}-${month}-${date}`)
+            .doc(`${otherUser.uid}${user.uid}${time}`)
+            .set(data)
+            .then(() => {
+                const dataHistoryOther = {
+                    lastContentChat: chatContent,
+                    lastChatDate: time,
+                    uidPartner: user.uid,
+                    photo: user.photo,
+                    name: user.name
+                };
+                firestore()
+                    .collection('messages')
+                    .doc(`${otherUser.uid}`)
+                    .collection(`${year}-${month}-${date}`)
+                    .doc(`${user.uid}`)
+                    .set(dataHistoryOther);
             })
+            .catch(error => {
+                showError(error.message);
+            });
     };
 
-    console.log('chatData', chatData);
+    // console.log('user', user);
 
     return (
         <View style={styles.page}>

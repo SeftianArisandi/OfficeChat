@@ -11,7 +11,6 @@ const ChooseUser = ({route, navigation}) => {
 
     useEffect(() => {
         getData('user').then((response) => {
-            const data = response;
             setProfile(response);
             callUserByCategory(category);
         });
@@ -37,9 +36,9 @@ const ChooseUser = ({route, navigation}) => {
         <View>
             <Header title={`Divisi ${category}`} onPress={() => navigation.goBack()} type="dark" />
             {
-                listUser && listUser.map((user) => {
+                listUser && listUser.map((user, id) => {
                 if(user._data.uid != profile.uid){
-                    return <ListMessage key={user._data.uid} onPress={() => navigation.navigate('Chatting', user._data)} type="next" profile={{uri: user._data.photo}} name={user._data.name} desc={user._data.profession} />;
+                    return <ListMessage key={id} onPress={() => navigation.navigate('Chatting', user._data)} type="next" profile={{uri: user._data.photo}} name={user._data.name} desc={user._data.profession} />;
                 }})
             }
         </View>

@@ -40,9 +40,9 @@ const Home = ({navigation}) => {
                     </ScrollView>
                 </View>
                 <Text style={styles.sectionLabel}>Announcement</Text>
-                <NewsItem title="Pengumuman A" date="Today" picture={DummyNews} />
-                <NewsItem title="Pengumuman A" date="Today" picture={DummyNews} />
-                <NewsItem title="Pengumuman A" date="Today" picture={DummyNews} />
+                <NewsItem title="Pengumuman A" date="Today" picture={DummyNews} onPress={() => navigation.navigate('NewsDetail', {title: "Pengumuman A"})} />
+                <NewsItem title="Pengumuman B" date="Today" picture={DummyNews} onPress={() => navigation.navigate('NewsDetail', {title: "Pengumuman B"})} />
+                <NewsItem title="Pengumuman C" date="Today" picture={DummyNews} onPress={() => navigation.navigate('NewsDetail', {title: "Pengumuman C"})} />
                 <Gap height={30} />
             </View>   
         </ScrollView>
