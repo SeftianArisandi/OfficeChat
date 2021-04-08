@@ -5,9 +5,10 @@ import { colors, fonts, getData, showError } from '../utils'
 import firestore from '@react-native-firebase/firestore'
 
 const Chatting = ({navigation, route}) => {
-    const otherUser = route.params;
+    const {uid} = route.params;
     const [chatContent, setChatContent] = useState("");
     const [user, setUser] = useState({});
+    const [otherUser, setOtherUser] = useState([]);
     const [chatData, setChatData] = useState([]);
 
     useEffect(() => {
@@ -15,6 +16,20 @@ const Chatting = ({navigation, route}) => {
         .then(response => {
             setUser(response);
         });
+    }, []);
+
+    useEffect(() => {
+        setTimeout(() => {
+            firestore()
+                .collection('users')
+                .doc(uid)
+                .get()
+                .then(res => {
+                    const data = res;
+                    const dataUser = data._data;
+                    setOtherUser(dataUser);
+                })
+        }, 300);
     }, []);
 
     useEffect(() => {
@@ -29,7 +44,7 @@ const Chatting = ({navigation, route}) => {
             .onSnapshot((querySnapshot) => {
                 setChatData(querySnapshot.docs);
             });
-    }, [user]);
+    }, [user, otherUser]);
 
     const chatSend = () => {
         const today = new Date();

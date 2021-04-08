@@ -32,7 +32,7 @@ const Messages = ({navigation}) => {
             <Text style={styles.title}>Messages</Text>
             {
                 messages && messages.map((message, id) => {
-                    return <ListMessage key={id} profile={{uri: message._data.photo}} name={message._data.name} desc={message._data.lastContentChat} onPress={() => navigation.navigate('Chatting')} type="next" />
+                    return <ListMessage key={id} profile={{uri: message._data.photo}} name={message._data.name} desc={message._data.lastContentChat} onPress={() => navigation.navigate('Chatting', {uid: message._data.uidPartner})} type="next" />
                 })
             }
         </View>
