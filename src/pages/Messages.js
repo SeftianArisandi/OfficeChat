@@ -14,6 +14,9 @@ const Messages = ({navigation}) => {
         .then(response => {
             setUser(response);
         });
+    }, []);
+
+    useEffect(() => {
         const today = new Date();
         const year = today.getFullYear();
         const month = today.getMonth() + 1;
@@ -25,7 +28,7 @@ const Messages = ({navigation}) => {
             .onSnapshot((querySnapshot) => {
                 setMessages(querySnapshot.docs);
             });
-    }, []);
+    }, [user]);
 
     return (
         <View style={styles.page}>

@@ -1,5 +1,5 @@
 import React, { useState ,useEffect } from 'react'
-import { StyleSheet, View, Text } from 'react-native'
+import { StyleSheet, View } from 'react-native'
 import { Header, ListMessage } from '../components'
 import firestore from '@react-native-firebase/firestore'
 import { getData } from '../utils'
