@@ -1,11 +1,10 @@
 import React from 'react'
-import { Image, ScrollView, StyleSheet, Text, View } from 'react-native'
-import { DummyNews } from '../assets'
+import { ScrollView, StyleSheet, Text, View } from 'react-native'
 import { Gap, Header } from '../components'
 import { colors, fonts } from '../utils'
 
 const NewsDetail = ({navigation, route }) => {
-    const {title, desc, photo} =route.params;
+    const {title, desc} = route.params;
     return (
         <View style={styles.page}>
             <Header title="News Detail" onPress={() => navigation.goBack()} type="dark" />
@@ -13,10 +12,8 @@ const NewsDetail = ({navigation, route }) => {
                 <View style={styles.content}>
                     <Gap height={10} />
                     <Text style={styles.title}>{title}</Text>
-                    <Gap height={10} />
-                    <Image source={DummyNews} style={styles.img} />
                     <Gap height={15} />
-                    <Text style={styles.desc}>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</Text>
+                    <Text style={styles.desc}>{desc}</Text>
                     <Gap height={30} />
                 </View>
             </ScrollView>
@@ -35,18 +32,15 @@ const styles = StyleSheet.create({
         paddingHorizontal: 20
     },
     title: {
-        fontSize: 23,
+        fontSize: 20,
         fontFamily: fonts.primary[600],
-        color: colors.text.primary
-    },
-    img: {
-        width: '100%',
-        height: 200,
-        borderRadius: 10
+        color: colors.text.primary,
+        textAlign: 'center',
+        textTransform: 'capitalize'
     },
     desc: {
-        fontSize: 17,
-        fontFamily: fonts.primary[600],
+        fontSize: 15,
+        fontFamily: fonts.primary[400],
         color: colors.text.primary,
         textAlign: 'justify'
     }

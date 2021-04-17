@@ -1,15 +1,16 @@
 import React from 'react'
 import { Image, StyleSheet, Text, View } from 'react-native'
-import { DummyUser } from '../../assets'
 import { colors, fonts } from '../../utils'
 
-const ChatItemOther = ({text, date, photo}) => {
+const ChatItemOther = ({text, text2, date, photo}) => {
     return (
         <View style={styles.container}>
             <Image source={photo} style={styles.avatar} />
             <View>
                 <View style={styles.chatContent}>
                     <Text style={styles.text}>{text}</Text>
+                    <View style={styles.divider} />
+                    <Text style={styles.text}>{text2}</Text>
                 </View>
                 <Text style={styles.date}>{date}</Text>
             </View>
@@ -34,9 +35,8 @@ const styles = StyleSheet.create({
     },
     chatContent: {
         padding: 12,
-        paddingRight: 18,
         backgroundColor: colors.primary,
-        maxWidth: '80%',
+        maxWidth: '100%',
         borderRadius: 10
     },
     text: {
@@ -49,5 +49,10 @@ const styles = StyleSheet.create({
         fontFamily: fonts.primary.normal,
         color: colors.text.secondary,
         marginTop: 8
+    },
+    divider: {
+        marginVertical: 5,
+        borderWidth: 1,
+        borderColor: colors.text.secondary
     }
 })

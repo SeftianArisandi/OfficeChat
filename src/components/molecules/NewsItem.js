@@ -29,9 +29,10 @@ const styles = StyleSheet.create({
         flex: 1
     },
     title: {
-        fontSize: 16,
+        fontSize: 14,
         fontFamily: fonts.primary[600],
-        color: colors.text.primary
+        color: colors.text.primary,
+        textTransform: 'capitalize'
     },
     date: {
         fontSize: 12,

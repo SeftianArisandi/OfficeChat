@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from 'react'
 import { ScrollView, StyleSheet, Text, View } from 'react-native'
-import { DummyNews } from '../assets'
+import { DummyNews2 } from '../assets'
 import { DivisionCategory, Gap, HomeProfile, NewsItem } from '../components'
 import { colors, fonts } from '../utils'
 import firestore from '@react-native-firebase/firestore'
 
 const Home = ({navigation}) => {
     const [categoryDivision, setCategoryDivision] = useState([]);
+    const [news, setNews] = useState([]);
 
     useEffect(() => {
         let mounted = true;
@@ -23,6 +24,24 @@ const Home = ({navigation}) => {
             });
         return () => mounted = false;
     }, [])
+
+    useEffect(() => {
+        let mounted = true;
+        firestore()
+            .collection('news')
+            .orderBy('newsDate', 'desc')
+            .limit(3)
+            .get()
+            .then(success => {
+                if(mounted){
+                    setNews(success.docs);
+                }
+            })
+            .catch(error => {
+                console.log(error);
+            });
+        return () => mounted = false;
+    }, [categoryDivision]);
 
     return (
         <ScrollView showsVerticalScrollIndicator={false} >
@@ -43,10 +62,12 @@ const Home = ({navigation}) => {
                         </View>
                     </ScrollView>
                 </View>
-                <Text style={styles.sectionLabel}>Announcement</Text>
-                <NewsItem title="Pengumuman A" date="Today" picture={DummyNews} onPress={() => navigation.navigate('NewsDetail', {title: "Pengumuman A"})} />
-                <NewsItem title="Pengumuman B" date="Today" picture={DummyNews} onPress={() => navigation.navigate('NewsDetail', {title: "Pengumuman B"})} />
-                <NewsItem title="Pengumuman C" date="Today" picture={DummyNews} onPress={() => navigation.navigate('NewsDetail', {title: "Pengumuman C"})} />
+                <Text style={styles.sectionLabel}>Pengumuman</Text>
+                {
+                    news && news.map((item, id) => {
+                        return <NewsItem key={id} title={item._data.newsTitle} date={item._data.newsDate} picture={DummyNews2} onPress={() => navigation.navigate('NewsDetail', {title: item._data.newsTitle, desc: item._data.newsContent})} />
+                    })
+                }
                 <Gap height={30} />
             </View>   
         </ScrollView>

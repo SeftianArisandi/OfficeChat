@@ -1,21 +1,52 @@
-import React from 'react'
-import { ImageBackground, StyleSheet, Text, View } from 'react-native'
-import { DummyNews, ILNewsBg } from '../assets'
+import React, { useState, useEffect } from 'react'
+import { ImageBackground, ScrollView, StyleSheet, Text, View } from 'react-native'
+import { DummyNews2, ILNewsBg } from '../assets'
 import { NewsItem } from '../components'
-import { colors, fonts } from '../utils'
+import { colors, fonts, getData } from '../utils'
+import firestore from '@react-native-firebase/firestore';
 
 const News = ({navigation}) => {
+    const [profile, setProfile] = useState({});
+    const [news, setNews] = useState([]);
+
+    useEffect(() => {
+        getData('user').then(response => {
+            setProfile(response);
+        });
+    }, []);
+
+    useEffect(() => {
+        let mounted = true;
+        firestore()
+            .collection('news')
+            .orderBy('newsDate', 'desc')
+            .get()
+            .then(success => {
+                if(mounted){
+                    setNews(success.docs);
+                }
+            })
+            .catch(error => {
+                console.log(error);
+            });
+        return () => mounted = false;
+    }, [profile]);
+
     return (
         <View style={styles.page}>
-            <ImageBackground source={ILNewsBg} style={styles.background}>
-                <Text style={styles.title}>Announcements</Text>
-                <Text style={styles.desc}>3 Tersedia</Text>
-            </ImageBackground>
-            <View style={styles.content}>
-                <NewsItem title="Pengumuman A" date="Today" picture={DummyNews} onPress={() => navigation.navigate('NewsDetail', {title: "Pengumuman A"})} />
-                <NewsItem title="Pengumuman B" date="Today" picture={DummyNews} onPress={() => navigation.navigate('NewsDetail', {title: "Pengumuman B"})} />
-                <NewsItem title="Pengumuman C" date="Today" picture={DummyNews} onPress={() => navigation.navigate('NewsDetail', {title: "Pengumuman C"})} />
-            </View>
+            <ScrollView>
+                <ImageBackground source={ILNewsBg} style={styles.background}>
+                    <Text style={styles.title}>{profile.language === 'id' ? 'Pengumuman' : 'Announcements'}</Text>
+                    <Text style={styles.desc}>{`${news.length} Tersedia`}</Text>
+                </ImageBackground>
+                <View style={styles.content}>
+                    {
+                        news && news.map((item, id) => {
+                            return <NewsItem key={id} title={item._data.newsTitle} date={item._data.newsDate} picture={DummyNews2} onPress={() => navigation.navigate('NewsDetail', {title: item._data.newsTitle, desc: item._data.newsContent})} />
+                        })
+                    }
+                </View>
+            </ScrollView>
         </View>
     )
 }

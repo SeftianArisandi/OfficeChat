@@ -3,6 +3,7 @@ import { ScrollView, StyleSheet, View } from 'react-native'
 import { ChatItem, Header, InputChat } from '../components'
 import { colors, fonts, getData, showError } from '../utils'
 import firestore from '@react-native-firebase/firestore'
+import { ProviderTypes, TranslatorConfiguration, TranslatorFactory } from 'react-native-power-translator'
 
 const Chatting = ({navigation, route}) => {
     const {uid} = route.params;
@@ -58,7 +59,7 @@ const Chatting = ({navigation, route}) => {
         return () => mounted = false;
     }, [user, otherUser]);
 
-    const chatSend = () => {
+    const chatSend = async () => {
         const today = new Date();
         const hour = today.getHours();
         const minutes = today.getMinutes();
@@ -66,12 +67,18 @@ const Chatting = ({navigation, route}) => {
         const month = today.getMonth() + 1;
         const date = today.getDate();
         const time = today.getTime();
+        TranslatorConfiguration.setConfig(ProviderTypes.Google, 'AIzaSyDvUgQB0Zqf5TAvQ6a_2ZfNV3G_YggzOU4', user.language === 'id' ? 'en' : 'id');
         const data = {
             sendBy: user.uid,
             chatDate: new Date().getTime(),
             chatTime: `${hour}:${minutes} ${hour > 12 ? 'PM' : 'AM'}`,
             chatContent: chatContent
-        }
+        };
+        const translator = TranslatorFactory.createTranslator();
+        const contentTranslate = await translator.translate(chatContent).then(translated => {
+            return translated;
+        });
+        data.chatContentTranslate = contentTranslate;
         // console.log('chat send: ', data);
         setChatContent('');
         firestore()
@@ -137,6 +144,7 @@ const Chatting = ({navigation, route}) => {
                             key={id} 
                             isMe={isMe} 
                             text={chat._data.chatContent} 
+                            text2={chat._data.chatContentTranslate} 
                             date={chat._data.chatTime} 
                             photo={isMe ? null : {uri: otherUser.photo}}
                         />

@@ -45,7 +45,8 @@ const UserProfile = ({navigation}) => {
                     {profile.name.length > 0 && <Profile name={profile.name} desc={profile.profession} photo={profile.photo} />}
                     <Gap height={25} />
                     <DataProfile dataName="Nomor Karyawan" dataValue={profile.noKaryawan} />
-                    <DataProfile dataName="Email Address" dataValue={profile.email} />
+                    <DataProfile dataName="Alamat Email" dataValue={profile.email} />
+                    <DataProfile dataName="Bahasa" dataValue={profile.language === 'id' ? 'Indonesia': 'English'} />
                     <DataProfile dataName="Divisi" dataValue={profile.divisi} />
                     <DataProfile dataName="Tanggal Lahir" dataValue={profile.bod} />
                     <DataProfile dataName="Jenis Kelamin" dataValue={profile.gender} />

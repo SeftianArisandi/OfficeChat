@@ -130,7 +130,7 @@ const UpdateProfile = ({navigation}) => {
                     <Gap height={20} />
                     <Input label="Nama Lengkap" value={profile.name} onChangeText={(value) => changeText('name', value)} />
                     <Gap height={20} />
-                    <Input label="Email" value={profile.email} disable />
+                    <Input label="Alamat Email" value={profile.email} disable />
                     <Gap height={20} />
                     <Input label="Divisi" value={profile.divisi} onChangeText={(value) => changeText('divisi', value)} />
                     <Gap height={20} />
@@ -138,7 +138,7 @@ const UpdateProfile = ({navigation}) => {
                     <Gap height={20} />
                     <Input label="Tanggal Lahir" value={profile.bod} disable />
                     <Gap height={20} />
-                    <Input label="Password" value={password} onChangeText={(value) => setPassword(value)} secureTextEntry />
+                    <Input label="New Password" value={password} onChangeText={(value) => setPassword(value)} secureTextEntry />
                     <Gap height={40} />
                     <Button title="Save Profile" onPress={update}/>
                 </View>
