@@ -1,8 +1,8 @@
 import React, { useState ,useEffect } from 'react'
-import { StyleSheet, View } from 'react-native'
+import { StyleSheet, Text, View } from 'react-native'
 import { Header, ListMessage } from '../components'
 import firestore from '@react-native-firebase/firestore'
-import { getData } from '../utils'
+import { colors, fonts, getData } from '../utils'
 
 const ChooseUser = ({route, navigation}) => {
     const {category} = route.params;
@@ -36,19 +36,36 @@ const ChooseUser = ({route, navigation}) => {
             });
     };
 
-    return (
-        <View>
-            <Header title={`Divisi ${category}`} onPress={() => navigation.goBack()} type="dark" />
-            {
-                listUser && listUser.map((user, id) => {
-                if(user._data.uid != profile.uid){
-                    return <ListMessage key={id} onPress={() => navigation.navigate('Chatting', user._data)} type="next" profile={{uri: user._data.photo}} name={user._data.name} desc={user._data.profession} />;
-                }})
-            }
-        </View>
-    )
+    if(listUser === 'empty'){
+        return (
+            <View>
+                <Header title={`Divisi ${category}`} onPress={() => navigation.goBack()} type="dark" />
+                <Text style={styles.title}>user list is empty</Text>
+            </View>
+        )
+    }else{
+        return (
+            <View>
+                <Header title={`Divisi ${category}`} onPress={() => navigation.goBack()} type="dark" />
+                {
+                    listUser && listUser.map((user, id) => {
+                    if(user._data.uid != profile.uid){
+                        return <ListMessage key={id} onPress={() => navigation.navigate('Chatting', user._data)} type="next" profile={{uri: user._data.photo}} name={user._data.name} desc={user._data.profession} />;
+                    }})
+                }
+            </View>
+        )
+    }
 }
 
 export default ChooseUser
 
-const styles = StyleSheet.create({})
+const styles = StyleSheet.create({
+    title: {
+        paddingTop: 50,
+        textAlign: 'center',
+        fontSize: 14,
+        fontFamily: fonts.primary[600],
+        color: colors.text.primary
+    }
+})
