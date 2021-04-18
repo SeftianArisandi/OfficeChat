@@ -13,9 +13,10 @@ const GetStarted = ({navigation}) => {
                 <Text style={styles.title}>Berkomunikasi dengan rekan kerja menjadi lebih mudah & fleksibel</Text>
             </View>
             <View>
-                <Button title="Get Started" onPress={() => navigation.navigate('Register')} />
-                <Gap height={16} />
-                <Button title="Sign In" type="secondary" onPress={() => navigation.replace('Login')} />
+                {/* <Button title="Get Started" onPress={() => navigation.navigate('Register')} />
+                <Gap height={16} /> */}
+                <Button title="Sign In" onPress={() => navigation.replace('Login')} />
+                <Gap height={15} />
             </View>
         </View>
     )

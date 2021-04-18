@@ -48,7 +48,7 @@ const Home = ({navigation}) => {
             <View style={styles.page}>
                 <Gap height={30} />
                 <HomeProfile onPress={() => navigation.replace('UserProfile')} />
-                <Text style={styles.welcome}>Mulai berkomunikasi dengan siapa hari ini?</Text>
+                <Text style={styles.welcome}>Mulailah berkomunikasi dengan rekan kerja</Text>
                 <View style={styles.wrapperScroll}>
                     <ScrollView horizontal showsHorizontalScrollIndicator={false}>
                         <View style={styles.category}>
@@ -88,7 +88,7 @@ const styles = StyleSheet.create({
         color: colors.text.primary,
         marginTop: 30,
         marginBottom: 16,
-        maxWidth: 209
+        maxWidth: 220
     },
     wrapperScroll: {
         marginHorizontal: -16
